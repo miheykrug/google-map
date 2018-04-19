@@ -1,0 +1,22 @@
+h3 My Google Maps Demo
+
+= form_with model: @map, url: root_path, local: true do |f|
+  p
+    = f.label :latitude
+    br
+    = f.text_field :latitude, id: :marker_latitude
+  p
+    = f.label :longitude
+    br
+    = f.text_field :longitude, id: :marker_longitude
+
+  = f.submit
+  p
+    | Заданные координаты: #{@map.latitude}, #{@map.longitude}
+  p
+    | Url:
+    =< link_to map_url(@map), map_url(@map), target: '_blank'
+= content_tag :div, '', id: 'map_container', data: {latitude: @map.latitude,
+                                          longitude: @map.longitude}
+
+=javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{ENV['MAP_API_KEY']}&callback=initMap", async: true, defer: true
